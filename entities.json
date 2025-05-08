@@ -104,7 +104,6 @@
                 "json_attributes_topic": "homeassistant/sensor/{identifier}_pump_starts/state",
                 "value_template": "{{ value_json.starts }}",
                 "unit_of_measurement": "starts",
-                "device_class": "None",
                 "icon": "mdi:counter"
             }
         },

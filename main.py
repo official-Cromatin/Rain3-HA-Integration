@@ -74,7 +74,6 @@ def get_elapsed_time_smal(before:datetime, now:datetime) -> str:
 
 def replace_placeholder(payload: dict[str, Any] | str, placeholder_replacement: dict[str, Any], recursive: bool = False):
     for key in payload:
-        print(key)
         value = payload[key]
         if isinstance(value, dict) and recursive:
             replace_placeholder(value, placeholder_replacement, recursive)
@@ -153,7 +152,6 @@ async def enroll_entities(mqtt_client:gmqtt.Client, identifier:str):
         discovery_topic = sensor_config["discovery_topic"]
 
         mqtt_client.publish(discovery_topic, json.dumps(discovery_payload), qos = 1, retain = True)
-        print(discovery_topic)
 
     # Change integration state to on
     mqtt_client.publish(
