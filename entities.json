@@ -1,0 +1,215 @@
+{
+    "device": {
+        "identifiers": ["{identifier}"],
+        "name": "Rain3 Pump",
+        "manufacturer": "Wilo",
+        "model": "Rain3",
+        "sw_version": "0.9"
+    },
+
+    "sensors": [
+        {
+            "discovery_topic": "homeassistant/binary_sensor/{identifier}_state_main_pump/config",
+
+            "discovery": {
+                "name": "Pump state",
+                "unique_id": "{topic_base}_state_main_pump",
+                "state_topic": "homeassistant/binary_sensor/{identifier}_state_main_pump/state",
+                "json_attributes_topic": "homeassistant/binary_sensor/{identifier}_state_main_pump/state",
+                "payload_on": true,
+                "payload_off": false,
+                "device_class": "power",
+                "icon": "mdi:water-pump"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_runtime_main_pump/config",
+
+            "discovery": {
+                "name": "Pump runtime",
+                "unique_id": "{topic_base}_runtime_main_pump",
+                "state_topic": "homeassistant/sensor/{identifier}_runtime_main_pump/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_runtime_main_pump/state",
+                "value_template": "{{ value_json.runtime }}",
+                "unit_of_measurement": "min",
+                "device_class": "duration",
+                "icon": "mdi:timer-outline"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_pressure/config",
+
+            "discovery": {
+                "name": "Pressure",
+                "unique_id": "{topic_base}_pressure",
+                "state_topic": "homeassistant/sensor/{identifier}_pressure/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_pressure/state",
+                "value_template": "{{ value_json.pressure }}",
+                "unit_of_measurement": "bar",
+                "device_class": "pressure",
+                "icon": "mdi:gauge-low"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_valve_position/config",
+
+            "discovery": {
+                "name": "Valve position",
+                "unique_id": "{topic_base}_valve_position",
+                "state_topic": "homeassistant/sensor/{identifier}_valve_position/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_valve_position/state",
+                "value_template": "{{ value_json.state }}",
+                "icon": "mdi:pipe-valve"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_valve_mode/config",
+
+            "discovery": {
+                "name": "Valve mode",
+                "unique_id": "{topic_base}_valve_mode",
+                "state_topic": "homeassistant/sensor/{identifier}_valve_mode/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_valve_mode/state",
+                "value_template": "{{ value_json.mode }}",
+                "icon": "mdi:pipe-valve"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_cistern_level/config",
+
+            "discovery": {
+                "name": "Cistern level",
+                "unique_id": "{topic_base}_cistern_level",
+                "state_topic": "homeassistant/sensor/{identifier}_cistern_level/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_cistern_level/state",
+                "value_template": "{{ value_json.level }}",
+                "unit_of_measurement": "cm",
+                "device_class": "distance",
+                "icon": "mdi:car-coolant-level"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_pump_starts/config",
+
+            "discovery": {
+                "name": "Pump starts this hour",
+                "unique_id": "{topic_base}_pump_starts",
+                "state_topic": "homeassistant/sensor/{identifier}_pump_starts/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_pump_starts/state",
+                "value_template": "{{ value_json.starts }}",
+                "unit_of_measurement": "starts",
+                "device_class": "None",
+                "icon": "mdi:counter"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_system_runtime/config",
+
+            "discovery": {
+                "name": "System runtime",
+                "unique_id": "{topic_base}_system_runtime",
+                "state_topic": "homeassistant/sensor/{identifier}_system_runtime/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_system_runtime/state",
+                "value_template": "{{ value_json.runtime }}",
+                "unit_of_measurement": "h",
+                "device_class": "duration",
+                "icon": "mdi:calendar-clock"
+            }
+        },
+        
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_system_switches/config",
+
+            "discovery": {
+                "name": "System switches",
+                "unique_id": "{topic_base}_system_switches",
+                "state_topic": "homeassistant/sensor/{identifier}_system_switches/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_system_switches/state",
+                "value_template": "{{ value_json.switches }}",
+                "unit_of_measurement": "times",
+                "icon": "mdi:restart"
+            }
+        }, 
+        
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_pump_runtime/config",
+
+            "discovery": {
+                "name": "Total pump runtime",
+                "unique_id": "{topic_base}_pump_runtime",
+                "state_topic": "homeassistant/sensor/{identifier}_pump_runtime/state",
+                "json_attributes_topic": "homeassistant/sensor/{identifier}_pump_runtime/state",
+                "value_template": "{{ value_json.runtime }}",
+                "unit_of_measurement": "h",
+                "device_class": "duration",
+                "icon": "mdi:clock-outline"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/binary_sensor/{identifier}_integration_active/config",
+
+            "discovery": {
+              "name": "Integration active",
+              "unique_id": "{topic_base}_integration_active",
+              "state_topic": "homeassistant/binary_sensor/{identifier}_integration_active/state",
+              "payload_on": true,
+              "payload_off": false,
+              "device_class": "connectivity",
+              "icon": "mdi:lan-connect",
+              "entity_category": "diagnostic"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/sensor/{identifier}_last_update/config",
+
+            "discovery": {
+              "name": "Last integration update",
+              "unique_id": "{topic_base}_last_update",
+              "state_topic": "homeassistant/sensor/{identifier}_last_update/state",
+              "value_template": "{{ value | int | timestamp_local }}",
+              "device_class": "timestamp",
+              "icon": "mdi:clock-check",
+              "entity_category": "diagnostic"
+            }
+        },
+
+        {
+            "discovery_topic": "homeassistant/binary_sensor/{identifier}_pump_connection/config",
+
+            "discovery": {
+              "name": "Pump connection",
+              "unique_id": "{topic_base}_pump_connection",
+              "state_topic": "homeassistant/binary_sensor/{identifier}_pump_connection/state",
+              "json_attributes_topic": "homeassistant/binary_sensor/{identifier}_pump_connection/state",
+              "value_template": "{{ value_json.status }}",
+              "payload_on": false,
+              "payload_off": true,
+              "device_class": "problem",
+              "icon": "mdi:lan-pending",
+              "entity_category": "diagnostic"
+            }
+        }             
+    ],
+
+    "website_map": {
+        "MP": 0,
+        "MP running for": 1,
+        "Pressure": 2,
+        "3 Ways-valve": 3,
+        "3.06 3-way valve mode": 4,
+        "Level": 5,
+        "Pump switches/hour": 6,
+        "4.12 System": 7,
+        "4.18 MP switches": 8,
+        "4.13 MP": 9
+    }
+}
