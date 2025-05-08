@@ -36,8 +36,42 @@ Changes are converted to the correct format and sent to Home Assistant via the a
 
 
 # Installation and setup
-**Will be published when the software is done**
+1. Build the image
+```bash
+docker build -t rain3-integration .
+```
 
+2. Start the container
+```bash
+docker run -d \
+  --name rain3 \
+  -e USE_ENV_FILE=false
+  -e DEBUG_LEVEL=10
+  -e RAIN3_HOST=http://192.168.6.3
+  -e RAIN3_POLL_INTERVAL=60
+  -e MQTT_HOST=192.168.2.104
+  -e MQTT_PORT=1883
+  -e MQTT_TOPIC_BASE=rain3_00
+  -e MQTT_DISCOVERY_IDENTIFIER=rain3_pump_001
+  -e MQTT_USERNAME=rain3
+  -e MQTT_PASSWORD=unwashed-powdering-budget
+  rain3-integration
+```
+
+3. Environment variables
+
+| Variable                    | Description                                        | Required  | Default |
+| --------------------------- | -------------------------------------------------- | --------- | ------- |
+| `USE_ENV_FILE`              | Disables the import of the .env file               | no        | `true`  |
+| `DEBUG_LEVEL`               | Used debug level to print messages to the console  | no        | `20`    |
+| `RAIN3_HOST`                | URL at which the rain3 webserver is reachable      | yes       | –       |
+| `RAIN3_POLL_INTERVAL`       | Sampling rate                                      | yes       | `60`    |
+| `MQTT_HOST`                 | MQTT host                                          | yes       | –       |
+| `MQTT_PORT`                 | MQTT port                                          | yes       | `1883`  |
+| `MQTT_TOPIC_BASE`           | MQTT topic base to use                             | yes       | –       |
+| `MQTT_DISCOVERY_IDENTIFIER` | MQTT identifier used for discovery messages        | yes       | -       |
+| `MQTT_USERNAME`             | MQTT username (if authentication is required)      |           | –       |
+| `MQTT_PASSWORD`             | MQTT password (if authentication is required)      |           | –       |
 
 # Contributing
 If you find any bugs or have feature requests, feel free to open an issue or submit a pull request! 
