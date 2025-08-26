@@ -16,6 +16,7 @@
                 "unique_id": "{topic_base}_state_main_pump",
                 "state_topic": "homeassistant/binary_sensor/{identifier}_state_main_pump/state",
                 "json_attributes_topic": "homeassistant/binary_sensor/{identifier}_state_main_pump/state",
+                "value_template": "{{ value_json.state }}",
                 "payload_on": true,
                 "payload_off": false,
                 "device_class": "power",

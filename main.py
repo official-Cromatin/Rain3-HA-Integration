@@ -39,12 +39,11 @@ class Colored_Formatter(logging.Formatter):
 
 console_debug_level_env = os.getenv("DEBUG_LEVEL")
 if console_debug_level_env:
-    console_debug_level = int(console_debug_level_env)
+    console_debug_level = logging.DEBUG
 else:
-    console_debug_level = logging.INFO
-console_debug_level = int(console_debug_level)
+    console_debug_level = logging.DEBUG
 console_handler = logging.StreamHandler()
-console_handler.setLevel(console_debug_level)
+console_handler.setLevel(logging.DEBUG)
 console_handler.setFormatter(Colored_Formatter())
 
 app_logger = logging.getLogger("app")
@@ -294,24 +293,32 @@ async def update_states(mqtt_client:gmqtt.Client, last_states:dict, identifier:s
                     minutes = int(match.group(2)) if match.group(2) else 0
                     update_payload = {"runtime": round(hours + (minutes / 60), 2)}
                     
-            mqtt_client.publish(update_topic, json.dumps(update_payload), qos = 0)
+    #         mqtt_client.publish(update_topic, json.dumps(update_payload), qos = 0)
 
-    mqtt_client.publish(
-        f"homeassistant/sensor/{identifier}_last_update/state",
-        payload = datetime.now().timestamp(),
-        qos=0
-    )
+    # mqtt_client.publish(
+    #     f"homeassistant/sensor/{identifier}_last_update/state",
+    #     payload = datetime.now().timestamp(),
+    #     qos=0
+    # )
 
-    mqtt_client.publish(
-        f"homeassistant/binary_sensor/{identifier}_pump_connection/state",
-        payload = json.dumps(web_state),
-        qos = 0
-    )
+    # mqtt_client.publish(
+    #     f"homeassistant/binary_sensor/{identifier}_pump_connection/state",
+    #     payload = json.dumps(web_state),
+    #     qos = 0
+    # )
     
     return current_states
 
-async def cleanup_and_exit(signal:signal.Signals, mqtt_client:gmqtt.Client):
+async def cleanup_and_exit(signal:signal.Signals, mqtt_client:gmqtt.Client, identifier:str):
     app_logger.info("Signal received, shutting down...")
+
+    mqtt_client.publish(
+        f"homeassistant/binary_sensor/{identifier}_integration_active/state",
+        False,
+        1,
+        True
+    )
+
     await mqtt_client.disconnect()
     exit(0)
 
@@ -319,18 +326,18 @@ async def main(identifier):
     last_states = {}
 
     # Establish connection to mqtt broker
-    mqtt_client = await establish_mqtt_connection(identifier)
+    # mqtt_client = await establish_mqtt_connection(identifier)
 
-    # Send discovery messages to ha
-    await enroll_entities(mqtt_client, identifier)
+    # # Send discovery messages to ha
+    # await enroll_entities(mqtt_client, identifier)
 
-    # Set up signal handlers for graceful shutdown
-    loop = asyncio.get_event_loop()
-    loop.add_signal_handler(signal.SIGINT, lambda: asyncio.create_task(cleanup_and_exit(signal.SIGINT, mqtt_client)))
-    loop.add_signal_handler(signal.SIGTERM, lambda: asyncio.create_task(cleanup_and_exit(signal.SIGTERM, mqtt_client)))
+    # # Set up signal handlers for graceful shutdown
+    # loop = asyncio.get_event_loop()
+    # loop.add_signal_handler(signal.SIGINT, lambda: asyncio.create_task(cleanup_and_exit(signal.SIGINT, mqtt_client, identifier)))
+    # loop.add_signal_handler(signal.SIGTERM, lambda: asyncio.create_task(cleanup_and_exit(signal.SIGTERM, mqtt_client, identifier)))
 
     while True:
-        last_states = await update_states(mqtt_client, last_states, identifier)
+        last_states = await update_states(None, last_states, identifier)
 
         await asyncio.sleep(int(os.getenv("RAIN3_POLL_INTERVAL")))
     
