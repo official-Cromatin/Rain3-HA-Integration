@@ -1,7 +1,13 @@
+> [!WARNING]  
+> I am no longer actively maintaining this repository.
+> 
+> Development is now focused on a [“native” integration](https://github.com/official-Cromatin/ha-wilo).
+
 > [!IMPORTANT]
 > This software is developed for my own personal use and published for others to get inspired.
 > Therefore "easy" integration in your setup might not be given and some changes needed.
-> Please feel free to open issues if you encounter problems or have suggestions!
+> 
+> ~~Please feel free to open issues if you encounter problems or have suggestions!~~
 
 
 # Motivation
